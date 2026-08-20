@@ -19,6 +19,7 @@ const app = express()
 app.disable('x-powered-by')
 
 const allowedOrigins = [
+  'https://carepoint-clinic-management-system.vercel.app',
   env.clientUrl,
   env.frontendUrl,
   'http://localhost:5173',
@@ -28,10 +29,10 @@ const allowedOrigins = [
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true)
+      callback(null, true)
+    } else {
+      callback(null, false)
     }
-
-    return callback(new Error('Not allowed by CORS'))
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
